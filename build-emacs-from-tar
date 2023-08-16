@@ -26,7 +26,7 @@ def build_emacs(src_dir, out_name, options={})
 
   FileUtils.cd(src_dir) do
     min_os_flag = options[:min_os] ? "-mmacosx-version-min=#{options[:min_os]}" : ""
-    host_flags = options[:host] ? ["--host=#{options[:host]}", '--build=i686-apple-darwin'] : []
+    host_flags = options[:host] ? ["--host=#{options[:host]}", '--build=powerpc-apple-darwin'] : []
 
     ENV['CC']="#{options[:cc]} #{min_os_flag} #{options[:extra_cc_options]}"
     Vsh.system_trace(["CC=#{ENV['CC']}"])
@@ -63,7 +63,7 @@ end
 
 os_maj_version = `sw_vers -productVersion`.chomp.sub(/^(\d+\.\d+)\.\d+/,'\1')
 
-options = arch == :powerpc ? { :cc => 'powerpc-apple-darwin10-gcc-4.2.1', :host => 'powerpc-apple-darwin', :min_os => '10.4', :extra_configure_flags => ['--without-xml2'] } :
+options = arch == :powerpc ? { :cc => 'powerpc-apple-darwin9-gcc-4.2.1', :host => 'powerpc-apple-darwin', :min_os => '10.4', :extra_configure_flags => ['--without-xml2'] } :
           arch == :i386    ? { :cc => 'i686-apple-darwin10-gcc-4.2.1',    :host => 'i686-apple-darwin',    :min_os => '10.5' } :
                              { }
 options[:min_os] =  '10.7' if os_maj_version == '10.8'
